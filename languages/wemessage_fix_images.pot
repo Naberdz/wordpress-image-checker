@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Missing Image checker\n"
-"POT-Creation-Date: 2020-10-26 13:56+0100\n"
-"PO-Revision-Date: 2020-10-26 13:56+0100\n"
+"POT-Creation-Date: 2020-10-26 15:39+0100\n"
+"PO-Revision-Date: 2020-10-26 15:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -54,16 +54,26 @@ msgstr ""
 msgid "Delete not found records"
 msgstr ""
 
-#: fix-images.php:163
+#: fix-images.php:162
+#, php-format
+msgid "File %s was misplaced should be as: %s and found as: %s"
+msgstr ""
+
+#: fix-images.php:169
 #, php-format
 msgid "File %s was not found on a server"
 msgstr ""
 
-#: fix-images.php:163 fix-images.php:165 fix-images.php:170
+#: fix-images.php:169 fix-images.php:171 fix-images.php:176
 msgid "Delete"
 msgstr ""
 
-#: fix-images.php:165 fix-images.php:170
+#: fix-images.php:171
+#, php-format
+msgid "Image %s was not attached to a post and was not found on server"
+msgstr ""
+
+#: fix-images.php:176
 #, php-format
 msgid "Image %s was not attached to a post"
 msgstr ""

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Missing Image checker\n"
-"POT-Creation-Date: 2020-10-26 13:56+0100\n"
-"PO-Revision-Date: 2020-10-26 13:59+0100\n"
+"POT-Creation-Date: 2020-10-26 15:39+0100\n"
+"PO-Revision-Date: 2020-10-26 15:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Poedit-WPHeader: fix-images.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
@@ -54,16 +54,28 @@ msgstr "Verwijder alle records"
 msgid "Delete not found records"
 msgstr "Niet-gevonden records verwijderen"
 
-#: fix-images.php:163
+#: fix-images.php:162
+#, php-format
+msgid "File %s was misplaced should be as: %s and found as: %s"
+msgstr "Bestand %s was misgeplaatst moet zijn als: %s en gevonden als: %s"
+
+#: fix-images.php:169
 #, php-format
 msgid "File %s was not found on a server"
 msgstr "Bestand %s was niet is gevonden op een server"
 
-#: fix-images.php:163 fix-images.php:165 fix-images.php:170
+#: fix-images.php:169 fix-images.php:171 fix-images.php:176
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: fix-images.php:165 fix-images.php:170
+#: fix-images.php:171
+#, php-format
+msgid "Image %s was not attached to a post and was not found on server"
+msgstr ""
+"Afbeelding %s niet is gekoppeld aan een bericht en is niet gevonden op de "
+"server"
+
+#: fix-images.php:176
 #, php-format
 msgid "Image %s was not attached to a post"
 msgstr "Afbeelding %s is niet aan een bericht gekoppeld"
@@ -81,8 +93,8 @@ msgid ""
 "Finds and removes unused images from uploads map, checks database for non "
 "existent images"
 msgstr ""
-"Vindt en verwijdert ongebruikte afbeeldingen uit uploads folder, "
-"controleert database voor niet-bestaande afbeeldingen"
+"Vindt en verwijdert ongebruikte afbeeldingen uit uploads folder, controleert "
+"database voor niet-bestaande afbeeldingen"
 
 #. Author of the plugin/theme
 msgid "Naberd @ Wemessage"

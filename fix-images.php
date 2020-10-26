@@ -168,7 +168,7 @@ function check_records() {
                     if($res[0]->post_parent){
                         echo '<p class="notFound file" style="padding:5px; border:1px solid; background:#eee; width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'">'.sprintf(__('File %s was not found on a server', 'wemessage_fix_images'),'<b>'.$results[0]->meta_value.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</p>';
                     } else {
-                        echo '<p class="notFound file record" style="padding:5px; border:1px solid; background:#fff;width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'"><img src="'.$media['baseurl'].'/'.$results[0]->meta_value.'" width="40" style="margin-right:10px;" />'.sprintf(__('Image %s was not attached to a post', 'wemessage_fix_images'), '<b>'.$results[0]->meta_value.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</span></p>';
+                        echo '<p class="notFound file record" style="padding:5px; border:1px solid; background:#fff;width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'"><img src="'.$media['baseurl'].'/'.$results[0]->meta_value.'" width="40" style="margin-right:10px;" />'.sprintf(__('Image %s was not attached to a post and was not found on server', 'wemessage_fix_images'), '<b>'.$results[0]->meta_value.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</span></p>';
                     }
                 }
             }
