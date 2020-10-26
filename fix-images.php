@@ -18,7 +18,7 @@ function wemessage_fix_images_load_textdomain() {
 
 add_action('admin_menu',  'wemessage_fix_images_admin_menu', 9);
 function wemessage_fix_images_admin_menu() {
-    add_menu_page(__('Missing image checker','wemessage_fix_images'), __('Missing image checker','wemessage_fix_images'), 'administrator', 'wemessage-fix-images', 'wemessage_fix_images_page', 'dashicons-chart-area', 26 );
+    add_menu_page(__('Missing image checker','wemessage_fix_images'), __('Missing image checker','wemessage_fix_images'), 'administrator', 'wemessage-fix-images', 'wemessage_fix_images_page', plugins_url('/images/icon.png', __FILE__));
 }
 
 function wemessage_fix_images_page(){?>
@@ -100,7 +100,7 @@ function wemessage_fix_images_page(){?>
         function deleteRecord(el){
             var data = {
                 'action': 'delete_record',
-                'id': jQuery(el).closest('.notFound').data(id);
+                'id': jQuery(el).closest('.notFound').data(id)
             };
             jQuery.post(ajaxurl, data, function(response) {
                 jQuery(el).closest('.notFound').remove();
@@ -147,27 +147,33 @@ add_action( 'wp_ajax_check_records', 'check_records' );
 function check_records() {
     global $wpdb;
     foreach($_POST['ids'] as $id){
-        $results = $wpdb->get_results('select * from '.$$wpdb->posmeta.' where meta_key="_wp_attached_file" and post_id='.$id['ID']);
+        $results = $wpdb->get_results('select * from '.$wpdb->postmeta.' where meta_key="_wp_attached_file" and post_id='.$id['ID']);
         $res = $wpdb->get_results('select * from '.$wpdb->posts.' where ID='.$id['ID']);
         if(count($results)){
             if($results[0]->meta_key=='_wp_attached_file'){
                 $found = false;
-                $media = wp_get_upload_dir();
+                $media = wp_upload_dir();
                 $it = new RecursiveDirectoryIterator($media['basedir']);
                 
                 foreach(new RecursiveIteratorIterator($it) as $file){
-                    if($file->getFilename() == $results[0]->meta_value) $found = true;
+                    if($file->getFilename() == $results[0]->meta_value){
+                    	$found = true;
+                    	if($file->getPathname() != $media['basedir'].'/'.$results[0]->meta_value){
+                    		echo '<p class="notFound file" style="padding:5px; border:1px solid; background:#eee; width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'">'.sprintf(__('File %s was misplaced should be as: %s and found as: %s', 'wemessage_fix_images'),'<b>'.$results[0]->meta_value.'</b>', $file->getPathname(), '<b>'.$media['basedir'].'/'.$results[0]->meta_value.'</b>').'</p>';
+                    		//rename($file->getPathname(), $media['basedir'].'/'.$results[0]->meta_value);
+                    	}
+                    }
                 }
                 if(!$found){
                     if($res[0]->post_parent){
                         echo '<p class="notFound file" style="padding:5px; border:1px solid; background:#eee; width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'">'.sprintf(__('File %s was not found on a server', 'wemessage_fix_images'),'<b>'.$results[0]->meta_value.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</p>';
                     } else {
-                        echo '<p class="notFound record" style="padding:5px; border:1px solid; background:#fff;width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'">'.sprintf(__('Image %s was not attached to a post', 'wemessage_fix_images'), '<b>'.$results[0]->meta_value.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</p>';
+                        echo '<p class="notFound file record" style="padding:5px; border:1px solid; background:#fff;width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'"><img src="'.$media['baseurl'].'/'.$results[0]->meta_value.'" width="40" style="margin-right:10px;" />'.sprintf(__('Image %s was not attached to a post', 'wemessage_fix_images'), '<b>'.$results[0]->meta_value.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</span></p>';
                     }
                 }
             }
         } else {
-            echo '<p class="notFound record" style="padding:5px; border:1px solid; background:#fff;width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'">'.sprintf(__('Image %s was not attached to a post', 'wemessage_fix_images'), '<b>'.$res[0]->post_name.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</p>';
+            echo '<p class="notFound record" style="padding:5px; border:1px solid; background:#fff;width:calc(100% - 12px); display:inline-block;" data-id="'.$id['ID'].'">'.sprintf(__('Image %s was not attached to a post', 'wemessage_fix_images'), '<b>'.$res[0]->post_name.'</b>').'<span class="button button-secondary pull-right" onclik="deleteRecord(this)">'.__('Delete', 'wemessage_fix_images').'</span></p>';
         }
     }
     wp_die();
@@ -178,7 +184,7 @@ function delete_records() {
     global $wpdb;
     $results = $wpdb->get_results('select * from '.$wpdb->postmeta.' where meta_key="_wp_attached_file" and post_id in ('.implode(',',$_POST['ids']).')');
     foreach($results as $result){
-        $media = wp_get_upload_dir();
+        $media = wp_upload_dir();
         $it = new RecursiveDirectoryIterator($media['basedir']);
         foreach(new RecursiveIteratorIterator($it) as $file){
             if($file->getFilename() == $result->meta_value) {
@@ -196,7 +202,7 @@ function delete_record() {
     global $wpdb;
     $results = $wpdb->get_results('select * from '.$wpdb->postmeta.' where meta_key="_wp_attached_file" and post_id='.$_POST['id']);
     foreach($results as $result){
-        $media = wp_get_upload_dir();
+        $media = wp_upload_dir();
         $it = new RecursiveDirectoryIterator($media['basedir']);
                 
         foreach(new RecursiveIteratorIterator($it) as $file){
